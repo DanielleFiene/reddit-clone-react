@@ -1,74 +1,149 @@
-// src/components/Header.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, TextField, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, TextField, Button, Box } from '@mui/material';
 
 const Header = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
     
     const handleSearch = (event) => {
-        event.preventDefault(); // Prevent form submission
-        // Navigate to the search results page or subreddit based on the search term
+        event.preventDefault();
         navigate(`/r/${searchTerm}`);
         setSearchTerm(''); // Clear the search input
     };
 
-    // State to manage button hover
-    const [isHovered, setIsHovered] = useState(false);
+    // State to manage hover effect for the main buttons
+    const [hoveredButton, setHoveredButton] = useState(null);
 
     return (
         <AppBar position="static" style={{ backgroundColor: '#333' }}>
             <Toolbar>
-                <Button
-                    color="inherit"
-                    onClick={() => navigate('/')}
-                    onMouseOver={() => setIsHovered(true)} // Change hover state
-                    onMouseOut={() => setIsHovered(false)} // Reset hover state
-                    style={{
-                        fontWeight: '600',
-                        color: isHovered ? '#FF8000' : '#FF5700', // Change color on hover
-                    }}
+                {/* Flexbox to distribute space */}
+                <Box 
+                    display="flex" 
+                    justifyContent="space-between" 
+                    alignItems="center" 
+                    width="100%"
                 >
-                    HOME
-                </Button>
-                <Typography variant="h6" style={{ flexGrow: 1, textAlign: 'left', color: '#FF5700', marginLeft: '45%' }}>
-                    REDDIT MINI
-                </Typography>
-                <form onSubmit={handleSearch} style={{ display: 'flex' }}>
-                    <TextField
-                        variant="outlined"
-                        size="small"
-                        placeholder="Search Subreddit..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                    {/* Left Section - HOME Button */}
+                    <Button
+                        color="inherit"
+                        onClick={() => navigate('/')}
+                        onMouseOver={() => setHoveredButton('home')} 
+                        onMouseOut={() => setHoveredButton(null)} 
                         style={{
-                            backgroundColor: 'white',
-                            color: 'black',
-                            marginRight: '8px',
-                            borderRadius: '8px',
+                            fontWeight: '600',
+                            color: '#FFFFFF',
+                            backgroundColor: hoveredButton === 'home' ? '#FF4500' : '#FF5700',
+                            padding: '8px 16px',
+                            borderRadius: '4px',
+                            textTransform: 'uppercase',
                         }}
-                        InputProps={{
-                            style: {
-                                color: 'black',
-                                fontWeight: 600 // Input text color
-                            },
-                        }}
-                        InputLabelProps={{
-                            style: {
-                                color: 'black',
-                            },
-                        }}
-                    />
-                    <Button type="submit" color="inherit" onMouseOver={() => setIsHovered(true)} // Change hover state
-                    onMouseOut={() => setIsHovered(false)} // Reset hover state
-                    style={{
-                        fontWeight: '600',
-                        color: isHovered ? '#FF8000' : '#FF5700', // Change color on hover
-                    }}>
-                        SEARCH
+                    >
+                        HOME
                     </Button>
-                </form>
+
+                    {/* Quick Navigation Buttons */}
+                    <Box display="flex" gap="16px">
+                        <Button
+                            color="inherit"
+                            onClick={() => navigate('/hot')}
+                            onMouseOver={() => setHoveredButton('hot')} 
+                            onMouseOut={() => setHoveredButton(null)}
+                            style={{
+                                fontWeight: '600',
+                                color: '#FFFFFF',
+                                backgroundColor: hoveredButton === 'hot' ? '#FF4500' : '#FF5700',
+                                padding: '8px 16px',
+                                borderRadius: '4px',
+                                textTransform: 'uppercase',
+                            }}
+                        >
+                            Hot Topics
+                        </Button>
+
+                        <Button
+                            color="inherit"
+                            onClick={() => navigate('/new')}
+                            onMouseOver={() => setHoveredButton('new')} 
+                            onMouseOut={() => setHoveredButton(null)}
+                            style={{
+                                fontWeight: '600',
+                                color: '#FFFFFF',
+                                backgroundColor: hoveredButton === 'new' ? '#FF4500' : '#FF5700',
+                                padding: '8px 16px',
+                                borderRadius: '4px',
+                                textTransform: 'uppercase',
+                            }}
+                        >
+                            New Posts
+                        </Button>
+
+                        <Button
+                            color="inherit"
+                            onClick={() => navigate('/top')}
+                            onMouseOver={() => setHoveredButton('top')} 
+                            onMouseOut={() => setHoveredButton(null)}
+                            style={{
+                                fontWeight: '600',
+                                color: '#FFFFFF',
+                                backgroundColor: hoveredButton === 'top' ? '#FF4500' : '#FF5700',
+                                padding: '8px 16px',
+                                borderRadius: '4px',
+                                textTransform: 'uppercase',
+                            }}
+                        >
+                            Top Posts
+                        </Button>
+                    </Box>
+
+                    {/* Middle Section - Title */}
+                    <Typography 
+                        variant="h6" 
+                        style={{ color: '#FF5700', fontWeight: 'bold' }} 
+                    >
+                        REDDIT MINI
+                    </Typography>
+
+                    {/* Right Section - Search Form */}
+                    <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center' }}>
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            placeholder="Search Subreddit..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{
+                                backgroundColor: 'white',
+                                color: 'black',
+                                marginRight: '8px',
+                                borderRadius: '8px',
+                            }}
+                            InputProps={{
+                                style: {
+                                    color: 'black',
+                                    fontWeight: '600',
+                                },
+                            }}
+                        />
+                        <Button 
+                            type="submit" 
+                            color="inherit" 
+                            onMouseOver={() => setHoveredButton('search')}
+                            onMouseOut={() => setHoveredButton(null)}
+                            style={{
+                                fontWeight: '600',
+                                color: '#FFFFFF',
+                                backgroundColor: hoveredButton === 'search' ? '#FF4500' : '#FF5700',
+                                padding: '8px 16px',
+                                borderRadius: '4px',
+                                textTransform: 'uppercase',
+                            }}
+                        >
+                            SEARCH
+                        </Button>
+                    </form>
+                </Box>
             </Toolbar>
         </AppBar>
     );

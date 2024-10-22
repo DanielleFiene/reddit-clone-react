@@ -4,6 +4,7 @@ import { List, ListItem, Typography, Button, Box, Divider, Card, CardContent } f
 import { Link, useParams } from 'react-router-dom';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import MessageIcon from '@mui/icons-material/Message';
 
 const PostList = () => {
     const { category } = useParams(); // Get category from URL
@@ -28,7 +29,7 @@ const PostList = () => {
     }, [category]);
 
     if (loading) return <Typography color="textSecondary">Loading...</Typography>;
-    if (error) return <Typography color="error">{error}</Typography>; // Display error message
+    if (error) return <Typography color="error">{error}</Typography>; 
 
     // Function to format timestamp to relative time
     const formatRelativeTime = (timestamp) => {
@@ -77,14 +78,14 @@ const PostList = () => {
                                                     textDecoration: 'none', 
                                                     color: '#FF5700',
                                                 }}
-                                                onMouseOver={(e) => (e.currentTarget.style.color = '#FF8000')} // Change color on hover
-                                                onMouseOut={(e) => (e.currentTarget.style.color = '#FF5700')} // Reset color when not hovering
+                                                onMouseOver={(e) => (e.currentTarget.style.color = '#FF8000')} 
+                                                onMouseOut={(e) => (e.currentTarget.style.color = '#FF5700')} 
                                             >
                                                 {post.data.title}
                                             </Link>
                                         </Typography>
 
-                                        {/* User's name and timestamp above the image, aligned horizontally */}
+                                        {/* User's name and timestamp above the image, aligned horizontally finally */}
                                         <Box display="flex" justifyContent="center" alignItems="center" marginBottom="8px">
                                             <Typography variant="subtitle1" style={{ marginRight: '40px', fontWeight: '600' }}>
                                                 Posted by:
@@ -102,24 +103,28 @@ const PostList = () => {
                                             <img
                                                 src={post.data.url}
                                                 alt={post.data.title}
-                                                loading="lazy" // Lazy loading for performance
+                                                loading="lazy" 
                                                 style={{ width: 'auto', height: '500px', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
                                             />
                                         ) : post.data.thumbnail && post.data.thumbnail.startsWith('http') ? (
                                             <img
                                                 src={post.data.thumbnail}
                                                 alt={post.data.title}
-                                                loading="lazy" // Lazy loading for performance
+                                                loading="lazy" 
                                                 style={{ width: 'auto', height: '500px', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
                                             />
                                         ) : (
-                                            <Typography variant="body1" color="textSecondary">No image available for this post.</Typography>
+                                            <Typography variant="body1" color="#FFFFFFF">No image available for this post.</Typography>
                                         )}
 
                                         {/* Comments Count */}
                                         <Typography variant="body2" style={{ marginTop: '8px', fontWeight: '600' }}>
-                                            Comments: {post.data.num_comments}
+                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                <MessageIcon style={{ marginRight: '4px' }} />
+                                                {post.data.num_comments}
+                                            </div>
                                         </Typography>
+
                                     </Box>
                                 </Box>
                             </CardContent>

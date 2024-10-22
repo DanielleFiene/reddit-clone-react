@@ -47,7 +47,7 @@ const RightSidebar = () => {
             <h3 style={{ borderBottom: '1px solid #ccc', textAlign: 'center' }}>Categories</h3>
             <List>
                 {categories.map((category) => (
-                    <ListItem button key={category} onClick={() => navigate(`/r/${category.toLowerCase()}`)}>
+                    <ListItem style={{ cursor: 'pointer' }} button key={category} onClick={() => navigate(`/r/${category.toLowerCase()}`)}>
                         <ListItemText primary={category} />
                     </ListItem>
                 ))}
@@ -60,6 +60,7 @@ const RightSidebar = () => {
                 <List>
                     {popularCommunities.map((community) => (
                         <ListItem
+                            style={{ cursor: 'pointer' }}
                             button
                             key={community.data.id}
                             onClick={() => navigate(`/r/${community.data.display_name.toLowerCase()}`)}

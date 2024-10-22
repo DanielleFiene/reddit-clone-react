@@ -52,6 +52,7 @@ const LeftSidebar = () => {
                         return (
                             threadData && (
                                 <ListItem 
+                                    style={{ cursor: 'pointer' }}
                                     button 
                                     key={threadData.id} 
                                     onClick={() => navigate(`/r/${threadData.subreddit}/comments/${threadData.id}/${threadData.title.replace(/[^a-z0-9]+/g, '-').toLowerCase()}`)}

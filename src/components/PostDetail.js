@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import MessageIcon from '@mui/icons-material/Message';
 
 const PostDetail = () => {
     const { subreddit, postId } = useParams();
@@ -72,7 +73,7 @@ const PostDetail = () => {
                     {/* Title */}
                     <Typography variant="h4" gutterBottom style={{ fontWeight: '600', color: '#FF5700', textAlign: 'center' }}>{post.title}</Typography>
 
-                    {/* User's name and timestamp above the image, aligned horizontally */}
+                    {/* User's name and timestamp above the image, aligned horizontally this time.. */}
                     <Box display="flex" justifyContent="center" alignItems="center" marginBottom="16px">
                         <Typography variant="subtitle1" sx={{ marginRight: '40px', fontWeight: '600' }}>
                             Posted by:  
@@ -100,30 +101,35 @@ const PostDetail = () => {
                             <img
                                 src={post.url}
                                 alt={post.title}
-                                loading="lazy" // Lazy loading for performance
+                                loading="lazy"
                                 style={{ width: '100%', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
                             />
                         ) : post.preview && post.preview.images.length > 0 ? (
                             <img
                                 src={post.preview.images[0].source.url}
                                 alt={post.title}
-                                loading="lazy" // Lazy loading for performance
+                                loading="lazy"
                                 style={{ width: '100%', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
                             />
                         ) : post.thumbnail && post.thumbnail.startsWith('http') ? (
                             <img
                                 src={post.thumbnail}
                                 alt={post.title}
-                                loading="lazy" // Lazy loading for performance
+                                loading="lazy"
                                 style={{ width: '50%', height: 'auto', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
                             />
                         ) : (
-                            <Typography variant="body1" color="textSecondary">No image available for this post.</Typography>
+                            <Typography variant="body1" color="#FFFFFFF">No image available for this post.</Typography>
                         )}
                     </Box>
 
                     {/* Comments Section */}
-                    <Typography variant="h5" gutterBottom sx={{ fontWeight: '600' }}>Comments: {post.num_comments}</Typography>
+                    <Typography variant="h5" gutterBottom sx={{ fontWeight: '600' }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <MessageIcon style={{ marginRight: '8px' }} />
+                            {post.num_comments}
+                        </div>
+                    </Typography>
                     <List style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
     {comments.map(comment => (
         <div key={comment.data.id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '8px', marginBottom: '8px', width: '100%' }}>
