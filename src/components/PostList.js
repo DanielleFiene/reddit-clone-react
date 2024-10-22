@@ -99,7 +99,26 @@ const PostList = () => {
                                         </Box>
 
                                         {/* Display image if available */}
-                                        {post.data.url && (post.data.url.endsWith('.jpg') || post.data.url.endsWith('.png')) ? (
+                                        {post.data.url && (post.data.url.endsWith('.jpg') 
+                                        || post.data.url.endsWith('.png') 
+                                        || post.data.url.endsWith('.jpeg') 
+                                        || post.data.url.endsWith('.gif')
+                                        || post.data.url.endsWith('.eps')
+                                        || post.data.url.endsWith('.tiff')
+                                        || post.data.url.endsWith('.raw')
+                                        || post.data.url.endsWith('.pdf')
+                                        || post.data.url.endsWith('.psd')
+                                        || post.data.url.endsWith('.bmp')
+                                        || post.data.url.endsWith('.webp')
+                                        || post.data.url.endsWith('.svg')
+                                        || post.data.url.endsWith('.amp')
+                                        || post.data.url.endsWith('.xcf')
+                                        || post.data.url.endsWith('.jfif')
+                                        || post.data.url.endsWith('.pjpeg')
+                                        || post.data.url.endsWith('.pjp')
+                                        || post.data.url.includes('format=jpg')
+                                        || post.data.url.includes('format=png')
+                                        ) ? (
                                             <img
                                                 src={post.data.url}
                                                 alt={post.data.title}

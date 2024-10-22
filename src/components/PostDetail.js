@@ -97,26 +97,39 @@ const PostDetail = () => {
                         </Box>
 
                         {/* Display images if available */}
-                        {post.url && (post.url.endsWith('.jpg') || post.url.endsWith('.png')) ? (
+                        {post.url && (post.url.endsWith('.jpg')
+                        || post.url.endsWith('.png') 
+                        || post.url.endsWith('.jpeg') 
+                        || post.url.endsWith('.gif')
+                        || post.url.endsWith('.eps')
+                        || post.url.endsWith('.tiff')
+                        || post.url.endsWith('.raw')
+                        || post.url.endsWith('.pdf')
+                        || post.url.endsWith('.psd')
+                        || post.url.endsWith('.bmp')
+                        || post.url.endsWith('.webp')
+                        || post.url.endsWith('.svg')
+                        || post.url.endsWith('.amp')
+                        || post.url.endsWith('.xcf')
+                        || post.url.endsWith('.jfif')
+                        || post.url.endsWith('.pjpeg')
+                        || post.url.endsWith('.pjp')
+                        || post.url.includes('format=jpg')
+                        || post.url.includes('format=png')
+                        ) ? (
                             <img
                                 src={post.url}
                                 alt={post.title}
                                 loading="lazy"
-                                style={{ width: '100%', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
+                                style={{ width: 'auto', height: '500px', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
                             />
-                        ) : post.preview && post.preview.images.length > 0 ? (
-                            <img
-                                src={post.preview.images[0].source.url}
-                                alt={post.title}
-                                loading="lazy"
-                                style={{ width: '100%', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
-                            />
+                        
                         ) : post.thumbnail && post.thumbnail.startsWith('http') ? (
                             <img
                                 src={post.thumbnail}
                                 alt={post.title}
                                 loading="lazy"
-                                style={{ width: '50%', height: 'auto', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
+                                style={{ width: 'auto', height: '500px', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
                             />
                         ) : (
                             <Typography variant="body1" color="#FFFFFFF">No image available for this post.</Typography>
