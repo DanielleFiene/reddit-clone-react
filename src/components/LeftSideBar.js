@@ -34,8 +34,14 @@ const LeftSidebar = () => {
     }, []);
 
     return (
-        <div style={{ width: '200px', padding: '16px', borderRight: '1px solid #ccc' }}>
-            <h3>Daily Discussion Threads</h3>
+        <div style={{ 
+            width: '200px', 
+            padding: '16px', 
+            borderRight: '1px solid #ccc', 
+            boxShadow: '10px 0 20px rgba(0, 0, 0, 0.5)',
+            zIndex: 1
+             }}>
+            <h3 style={{ borderBottom: '1px solid #ccc', textAlign: 'center' }}>Daily Discussion Threads</h3>
             {loading ? (
                 <CircularProgress />
             ) : (

@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 
 const MainContent = () => {
     return (
-        <div style={{ flex: 1, padding: '16px' }}>
+        <div style={{ flex: 1, padding: '16px', backgroundColor: '#d3d3d3' }}>
             <Routes>
                 <Route path="/r/:category" element={<PostList />} />
                 <Route path="/r/:subreddit/comments/:postId/:postTitle" element={<PostDetail />} />

@@ -37,8 +37,14 @@ const RightSidebar = () => {
     };
 
     return (
-        <div style={{ width: '200px', padding: '16px', borderLeft: '1px solid #ccc' }}>
-            <h3>Categories</h3>
+        <div style={{ 
+            width: '200px', 
+            padding: '16px', 
+            borderLeft: '1px solid #ccc',
+            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.5)',
+            zIndex: 1,
+             }}>
+            <h3 style={{ borderBottom: '1px solid #ccc', textAlign: 'center' }}>Categories</h3>
             <List>
                 {categories.map((category) => (
                     <ListItem button key={category} onClick={() => navigate(`/r/${category.toLowerCase()}`)}>
@@ -47,7 +53,7 @@ const RightSidebar = () => {
                 ))}
             </List>
 
-            <h3>Popular Communities</h3>
+            <h3 style={{ borderBottom: '1px solid #ccc', textAlign: 'center' }}>Popular Communities</h3>
             {loading ? (
                 <CircularProgress />
             ) : (

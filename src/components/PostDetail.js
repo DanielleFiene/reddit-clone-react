@@ -67,20 +67,20 @@ const PostDetail = () => {
     return (
         <Box sx={{ padding: '16px', display: 'flex', justifyContent: 'center' }}>
             {/* Card Wrapper for Post Details */}
-            <Card sx={{ width: '70%' }}>
+            <Card sx={{ width: '70%', padding: '16px', backgroundColor: '#333', borderRadius: '8px', color: '#FFFFFF', boxShadow: '0 10px 20px rgba(0, 0, 0, 0.5)' }}>
                 <CardContent >
                     {/* Title */}
-                    <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>{post.title}</Typography>
+                    <Typography variant="h4" gutterBottom style={{ fontWeight: '600', color: '#FF5700', textAlign: 'center' }}>{post.title}</Typography>
 
                     {/* User's name and timestamp above the image, aligned horizontally */}
                     <Box display="flex" justifyContent="center" alignItems="center" marginBottom="16px">
-                        <Typography variant="subtitle1" sx={{ marginRight: '40px' }}>
+                        <Typography variant="subtitle1" sx={{ marginRight: '40px', fontWeight: '600' }}>
                             Posted by:  
                             <Link to={`/user/${post.author}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                 {post.author}
                             </Link>
                         </Typography>
-                        <Typography variant="body2" color="textSecondary">{formatRelativeTime(post.created)}</Typography>
+                        <Typography variant="body2" color="textSecondary" sx={{ color: '#FFFFFF', fontWeight: '600' }}>{formatRelativeTime(post.created)}</Typography>
                     </Box>
 
                     <Box display="flex" alignItems="center" justifyContent="center" marginBottom="16px">
@@ -123,28 +123,36 @@ const PostDetail = () => {
                     </Box>
 
                     {/* Comments Section */}
-                    <Typography variant="h5" gutterBottom>Comments: {post.num_comments}</Typography>
+                    <Typography variant="h5" gutterBottom sx={{ fontWeight: '600' }}>Comments: {post.num_comments}</Typography>
                     <List style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        {comments.map(comment => (
-                            <div key={comment.data.id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '8px', marginBottom: '8px', width: '100%' }}>
-                                <ListItem style={{ justifyContent: 'center' }}>
-                                    <ListItemText
-                                        primary={comment.data.body}
-                                        secondary={`By: ${comment.data.author} | ${formatRelativeTime(comment.data.created)}`}
-                                    />
-                                    <Box display="flex" alignItems="center">
-                                        <Button size="small" onClick={() => console.log('Upvote comment')} style={{ marginRight: '8px' }}>
-                                            <ArrowUpwardIcon />
-                                        </Button>
-                                        <Button size="small" onClick={() => console.log('Downvote comment')}>
-                                            <ArrowDownwardIcon />
-                                        </Button>
-                                    </Box>
-                                </ListItem>
-                                <Divider />
-                            </div>
-                        ))}
-                    </List>
+    {comments.map(comment => (
+        <div key={comment.data.id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '8px', marginBottom: '8px', width: '100%' }}>
+            <ListItem style={{ justifyContent: 'center' }}>
+                <ListItemText
+                    primary={
+                        <Typography variant="body1" sx={{ color: '#FFFFFF' }}>
+                            {comment.data.body}
+                        </Typography>
+                    }
+                    secondary={
+                        <Typography variant="body2" sx={{ color: '#FFFFFF' }}>
+                            {`By: ${comment.data.author} | ${formatRelativeTime(comment.data.created)}`}
+                        </Typography>
+                    }
+                />
+                <Box display="flex" alignItems="center">
+                    <Button size="small" onClick={() => console.log('Upvote comment')} style={{ marginRight: '8px' }}>
+                        <ArrowUpwardIcon />
+                    </Button>
+                    <Button size="small" onClick={() => console.log('Downvote comment')}>
+                        <ArrowDownwardIcon />
+                    </Button>
+                </Box>
+            </ListItem>
+            <Divider />
+        </div>
+    ))}
+</List>
                 </CardContent>
             </Card>
         </Box>

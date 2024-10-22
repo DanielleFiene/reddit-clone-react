@@ -53,7 +53,7 @@ const PostList = () => {
                 <ListItem key={post.data.id} style={{ display: 'block', margin: '16px 0', height: 'auto' }}>
                     <Box display="flex" alignItems="center" justifyContent="center" width="100%">
                         {/* Card for each post */}
-                        <Card sx={{ width: '70%', padding: '16px' }}>
+                        <Card sx={{ width: '70%', padding: '16px', backgroundColor: '#333', borderRadius: '8px', color: '#FFFFFF', boxShadow: '0 10px 20px rgba(0, 0, 0, 0.5)' }}>
                             <CardContent>
                                 
                                 <Box display="flex" alignItems="center" justifyContent="center" marginBottom="16px">
@@ -68,23 +68,31 @@ const PostList = () => {
                                         </Button>
                                     </Box>
 
-                                    <Box display="flex" flexDirection="column" alignItems="center" width="100%">
+                                                                <Box display="flex" flexDirection="column" alignItems="center" width="100%">
                                         {/* Title */}
-                                        <Typography variant="h6" gutterBottom>
-                                            <Link to={`/r/${post.data.subreddit}/comments/${post.data.id}/${post.data.title.replace(/[^a-z0-9]+/g, '-').toLowerCase()}`}>
+                                        <Typography variant="h6" gutterBottom style={{ fontWeight: '600', color: '#FF5700' }}>
+                                            <Link 
+                                                to={`/r/${post.data.subreddit}/comments/${post.data.id}/${post.data.title.replace(/[^a-z0-9]+/g, '-').toLowerCase()}`} 
+                                                style={{ 
+                                                    textDecoration: 'none', 
+                                                    color: '#FF5700',
+                                                }}
+                                                onMouseOver={(e) => (e.currentTarget.style.color = '#FF8000')} // Change color on hover
+                                                onMouseOut={(e) => (e.currentTarget.style.color = '#FF5700')} // Reset color when not hovering
+                                            >
                                                 {post.data.title}
                                             </Link>
                                         </Typography>
 
                                         {/* User's name and timestamp above the image, aligned horizontally */}
                                         <Box display="flex" justifyContent="center" alignItems="center" marginBottom="8px">
-                                            <Typography variant="subtitle1" style={{ marginRight: '16px' }}>
+                                            <Typography variant="subtitle1" style={{ marginRight: '40px', fontWeight: '600' }}>
                                                 Posted by:
-                                                <Link to={`/user/${post.data.author}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                                <Link to={`/user/${post.data.author}`} style={{ textDecoration: 'none', color: '#FFFFFF' }}>
                                                     {post.data.author}
                                                 </Link>
                                             </Typography>
-                                            <Typography variant="body2" color="textSecondary">
+                                            <Typography variant="body2" color="textSecondary" style={{ color: '#FFFFFF',fontWeight: '600' }}>
                                             {formatRelativeTime(post.created)}
                                             </Typography>
                                         </Box>
@@ -109,7 +117,7 @@ const PostList = () => {
                                         )}
 
                                         {/* Comments Count */}
-                                        <Typography variant="body2" style={{ marginTop: '8px' }}>
+                                        <Typography variant="body2" style={{ marginTop: '8px', fontWeight: '600' }}>
                                             Comments: {post.data.num_comments}
                                         </Typography>
                                     </Box>
