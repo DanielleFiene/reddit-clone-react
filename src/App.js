@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js main component combining all components
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import LeftSidebar from './components/LeftSideBar';
+import RightSidebar from './components/RightSideBar';
+import MainContent from './components/Maincontent';
+import { Box } from '@mui/material';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <Router>
+            <Box display="flex" flexDirection="row" height="100vh">
+                <LeftSidebar />
+                <MainContent />
+                <RightSidebar />
+            </Box>
+        </Router>
+    );
+};
 
 export default App;
