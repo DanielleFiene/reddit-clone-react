@@ -12,7 +12,7 @@ const App = () => {
     return (
         <Router>
           <Header />
-            <Box display="flex" flexDirection="row" height="100vh">
+            <Box display="flex" flexDirection="row" height="100%">
                 <LeftSidebar />
                 <MainContent />
                 <RightSidebar />
