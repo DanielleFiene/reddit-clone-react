@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { List, ListItem, ListItemText, CircularProgress, ListItemAvatar, Avatar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { cleanAvatarUrl, cleanUrl } from '../helperfunctions/utils';
 
 const RightSidebar = () => {
     const navigate = useNavigate();
@@ -29,9 +30,11 @@ const RightSidebar = () => {
     const getCommunityIcon = (community) => {
         // Attempt to get the icon from different fields
         const iconUrl =
-            community.icon_img ||
-            (community.community_icon && community.community_icon.includes('http') ? community.community_icon.split('?')[0] : '/default-avatar.png') ||
-            '/default-avatar.png'; // Fallback to a default image
+            cleanAvatarUrl(community.icon_img) || // Clean the icon image URL
+            (community.community_icon && community.community_icon.includes('http') 
+                ? cleanUrl(community.community_icon.split('?')[0]) // Clean community icon if it's a valid URL
+                : '/default-avatar.png') || // Fallback to a default image
+            '/default-avatar.png'; // Additional fallback to ensure a default image is used
 
         return iconUrl;
     };
@@ -43,7 +46,7 @@ const RightSidebar = () => {
             borderLeft: '1px solid #ccc',
             boxShadow: '0 10px 20px rgba(0, 0, 0, 0.5)',
             zIndex: 1,
-             }}>
+        }}>
             <h3 style={{ borderBottom: '1px solid #ccc', textAlign: 'center' }}>Categories</h3>
             <List>
                 {categories.map((category) => (
@@ -67,7 +70,7 @@ const RightSidebar = () => {
                         >
                             <ListItemAvatar>
                                 <Avatar
-                                    src={getCommunityIcon(community.data)} // Use the icon fetching function
+                                    src={getCommunityIcon(community.data)} // Use the cleaned icon URL
                                     alt={community.data.display_name}
                                 />
                             </ListItemAvatar>
