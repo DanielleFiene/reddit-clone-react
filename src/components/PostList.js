@@ -1,27 +1,31 @@
-// src/components/PostList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { List, ListItem, Typography, Button, Box, Card, CardContent } from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom'; // Import useLocation for query params
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import MessageIcon from '@mui/icons-material/Message';
-import { isValidImageUrl, cleanUrl, cleanAvatarUrl, isValidAvatarUrl } from '../helperfunctions/utils'; // Import the helper functions
+import { isValidImageUrl, cleanUrl, cleanAvatarUrl, isValidAvatarUrl } from '../helperfunctions/utils'; // Import helper functions
 
 const PostList = () => {
     const { category } = useParams(); // Get category from URL
+    const location = useLocation(); // Get location object to access query params
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null); // Error state
+
+    // Extract the 'type' query parameter
+    const queryParams = new URLSearchParams(location.search);
+    const type = queryParams.get('type') || 'top'; // Default to 'top' if no type is specified
 
     useEffect(() => {
         const fetchPosts = async () => {
             setLoading(true);
             try {
                 const response = await axios.get(
-                    `https://www.reddit.com/r/${category ? category : 'all'}/top.json?limit=20`
+                    `https://www.reddit.com/r/${category ? category : 'all'}/${type}.json?limit=20` // Use the 'type' parameter in the API request
                 );
-                
+
                 // Map through the posts and include the author's avatar
                 const postData = await Promise.all(
                     response.data.data.children.map(async (post) => {
@@ -60,10 +64,10 @@ const PostList = () => {
                 setLoading(false);
             }
         };
-    
+
         fetchPosts();
-    }, [category]);
-    
+    }, [category, type]); // Add 'type' to the dependency array
+
     if (loading) return <Typography color="textSecondary">Loading...</Typography>;
     if (error) return <Typography color="error">{error}</Typography>; 
 
@@ -154,7 +158,7 @@ const PostList = () => {
                                                 </Link>
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary" style={{ color: '#FFFFFF', fontWeight: '600' }}>
-                                                {formatRelativeTime(post.data.created_utc)} {/* Changed to created_utc */}
+                                                {formatRelativeTime(post.data.created_utc)}
                                             </Typography>
                                         </Box>
 
