@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Reddit Mini
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Reddit Mini** is a simple web application that allows users to explore various Reddit subreddits. The application fetches data from the Reddit API to display posts, comments, and provide basic navigation between different subreddit topics.
 
-## Available Scripts
+Due to the API call limit if you click too many times its gets blocked for 5 minutes...
 
-In the project directory, you can run:
+https://reddit-mini-react.vercel.app/
 
-### `npm start`
+![Reddit mini](https://github.com/user-attachments/assets/76f0002c-824a-4760-b540-a1e812954d26)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Table of Contents
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Limitations](#limitations)
+- [Future Enhancements](#future-enhancements)
+- [Contributing](#contributing)
+- [License](#license)
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Browse top posts from multiple subreddits, including **AskReddit**, **gaming**, and **movies**.
+- A header with quick navigation buttons to **Hot Topics**, **New Posts**, and **Top Posts**.
+- A search functionality to navigate to specific subreddits.
+- Displays comments for each post, with avatars sourced from user profiles.
 
-### `npm run build`
+## Technologies Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Frontend**: React, React Router, Material-UI
+- **API**: Reddit API for fetching posts, comments, images, avatars and community icons
+- **State Management**: React Hooks for managing component state
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
 
-### `npm run eject`
+   ```bash
+   git clone https://github.com/yourusername/reddit-mini.git
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Navigate into the project directory:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   cd reddit-mini
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Install the required dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+4. Start the development server:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. Open your browser and go to `http://localhost:3000`.
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Once the application is running, you can:
 
-### Analyzing the Bundle Size
+- Navigate between different subreddit topics using the buttons in the header.
+- Search for specific subreddits using the search bar.
+- Click on any post to view its comments and details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Limitations
 
-### Making a Progressive Web App
+- **Desktop Only**: This application is currently designed for desktop use. Due to the number of API calls being made, responsiveness is limited. Any small CSS change leads to reloading the application, which was resulting in temporary blocks by the Reddit API.
+- **Testing**: Although testing has not been incorporated into this version, it is planned for future iterations to ensure the reliability of the application, next time, in a new project, I will start with making tests for each function.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Future Enhancements
 
-### Advanced Configuration
+- Implement unit tests for components and features to improve code reliability.
+- Improve mobile responsiveness and user interface for smaller screens.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contributing
 
-### Deployment
+Contributions are welcome! If you have suggestions for improvements or features, feel free to fork the repository and submit a pull request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## License
 
-### `npm run build` fails to minify
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
