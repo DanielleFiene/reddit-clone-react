@@ -30,12 +30,19 @@ const PostDetail = () => {
     useEffect(() => {
         const fetchPostDetails = async () => {
             try {
-                const response = await axios.get(`https://www.reddit.com/r/${subreddit}/comments/${postId}.json?limit=20`);
+                const response = await axios.get(`https://www.reddit.com/r/${subreddit}/comments/${postId}.json?limit=10`);
                 if (response.data && response.data.length > 0 && response.data[0].data.children.length > 0) {
-                    setPost(response.data[0].data.children[0].data);
+                    const postData = response.data[0].data.children[0].data;
+                    const author = postData.author;
+                    setPost(postData);
                     setComments(response.data[1].data.children);
-                    await fetchAuthorAvatar(response.data[0].data.children[0].data.author);
-                    await fetchCommentAvatars(response.data[1].data.children); // Fetch avatars for comments
+                    console.log('Fetched post and comments:', response.data);
+        
+                    // Fetch the author's avatar
+                    await fetchAuthorAvatar(author);
+
+                    // Fetch avatars for comments
+                    await fetchCommentAvatars(response.data[1].data.children); // Call fetchCommentAvatars here
                 } else {
                     setError("Post not found.");
                 }
