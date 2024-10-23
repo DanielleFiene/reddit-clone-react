@@ -219,7 +219,13 @@ const PostDetail = () => {
                                     )}
                                     <ListItemText
                                         primary={
-                                            <Typography variant="body1" sx={{ color: '#FFFFFF', cursor: 'pointer', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }} onClick={() => console.log(`Clicked on ${comment.data.author}`)}>
+                                            <Typography
+                                                variant="body1"
+                                                sx={{
+                                                    color: '#FFFFFF',
+                                                }}
+                                                onClick={() => console.log(`Clicked on ${comment.data.author}`)}
+                                            >
                                                 {comment.data.body}
                                             </Typography>
                                         }
@@ -246,6 +252,7 @@ const PostDetail = () => {
                             </div>
                         ))}
                     </List>
+
 
                 </CardContent>
             </Card>
