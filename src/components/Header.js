@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, TextField, Button, Box } from '@mui/material';
+import RedditIcon from '@mui/icons-material/Reddit';
 
 const Header = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
-    
+
     const handleSearch = (event) => {
         event.preventDefault();
         navigate(`/r/${searchTerm}`);
@@ -18,13 +19,7 @@ const Header = () => {
     return (
         <AppBar position="static" style={{ backgroundColor: '#333' }}>
             <Toolbar>
-                {/* Flexbox to distribute space */}
-                <Box 
-                    display="flex" 
-                    justifyContent="space-between" 
-                    alignItems="center" 
-                    width="100%"
-                >
+                <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
                     {/* Left Section - HOME Button */}
                     <Button
                         color="inherit"
@@ -47,7 +42,7 @@ const Header = () => {
                     <Box display="flex" gap="16px">
                         <Button
                             color="inherit"
-                            onClick={() => navigate('/hot')}
+                            onClick={() => navigate('/r/all?type=hot')}
                             onMouseOver={() => setHoveredButton('hot')} 
                             onMouseOut={() => setHoveredButton(null)}
                             style={{
@@ -64,7 +59,7 @@ const Header = () => {
 
                         <Button
                             color="inherit"
-                            onClick={() => navigate('/new')}
+                            onClick={() => navigate('/r/all?type=new')}
                             onMouseOver={() => setHoveredButton('new')} 
                             onMouseOut={() => setHoveredButton(null)}
                             style={{
@@ -81,7 +76,7 @@ const Header = () => {
 
                         <Button
                             color="inherit"
-                            onClick={() => navigate('/top')}
+                            onClick={() => navigate('/r/all?type=top')}
                             onMouseOver={() => setHoveredButton('top')} 
                             onMouseOut={() => setHoveredButton(null)}
                             style={{
@@ -100,8 +95,9 @@ const Header = () => {
                     {/* Middle Section - Title */}
                     <Typography 
                         variant="h6" 
-                        style={{ color: '#FF5700', fontWeight: 'bold' }} 
+                        style={{ color: '#FF5700', fontWeight: 'bold', display: 'flex', alignItems: 'center' }} 
                     >
+                        <RedditIcon style={{ color: '#FFFFFF', marginRight: '8px' }} />
                         REDDIT MINI
                     </Typography>
 

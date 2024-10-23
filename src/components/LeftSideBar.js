@@ -1,4 +1,3 @@
-// src/components/LeftSidebar.js
 import React, { useEffect, useState } from 'react';
 import { List, ListItem, ListItemText, CircularProgress, ListItemAvatar, Avatar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -40,7 +39,7 @@ const LeftSidebar = () => {
             borderRight: '1px solid #ccc', 
             boxShadow: '10px 0 20px rgba(0, 0, 0, 0.5)',
             zIndex: 1
-             }}>
+        }}>
             <h3 style={{ borderBottom: '1px solid #ccc', textAlign: 'center' }}>Daily Discussion Threads</h3>
             {loading ? (
                 <CircularProgress />
@@ -63,7 +62,18 @@ const LeftSidebar = () => {
                                             alt="Discussion Icon"
                                         />
                                     </ListItemAvatar>
-                                    <ListItemText primary={threadData.title} />
+                                    <ListItemText 
+                                        primary={
+                                            <span style={{
+                                                fontSize: '0.875rem', // Smaller font size (14px)
+                                                whiteSpace: 'normal', // Allow wrapping at whitespace
+                                                overflowWrap: 'break-word', // Allow long words to break
+                                                maxWidth: '140px', // Set a maximum width for the text
+                                            }}>
+                                                {threadData.title}
+                                            </span>
+                                        } 
+                                    />
                                 </ListItem>
                             )
                         );
