@@ -1,10 +1,12 @@
+// src/components/PostList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List, ListItem, Typography, Button, Box, Divider, Card, CardContent } from '@mui/material';
+import { List, ListItem, Typography, Button, Box, Card, CardContent } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import MessageIcon from '@mui/icons-material/Message';
+import { isValidImageUrl, cleanUrl, cleanAvatarUrl, isValidAvatarUrl } from '../helperfunctions/utils'; // Import the helper functions
 
 const PostList = () => {
     const { category } = useParams(); // Get category from URL
@@ -16,18 +18,52 @@ const PostList = () => {
         const fetchPosts = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`https://www.reddit.com/r/${category ? category : 'all'}/top.json?limit=20`);
-                setPosts(response.data.data.children);
+                const response = await axios.get(
+                    `https://www.reddit.com/r/${category ? category : 'all'}/top.json?limit=20`
+                );
+                
+                // Map through the posts and include the author's avatar
+                const postData = await Promise.all(
+                    response.data.data.children.map(async (post) => {
+                        const author = post.data.author;
+                        let authorAvatar = null;
+
+                        try {
+                            // Fetch user info for the author, if avatar data is available
+                            const userResponse = await axios.get(
+                                `https://www.reddit.com/user/${author}/about.json`
+                            );
+                            let userIcon = userResponse.data.data.icon_img;
+                            let snoovatar = userResponse.data.data.snoovatar_img;
+
+                            // Clean the URLs and handle special characters
+                            userIcon = cleanAvatarUrl(userIcon);
+                            snoovatar = cleanAvatarUrl(snoovatar);
+
+                            // Use snoovatar if available, otherwise fall back to icon_img
+                            authorAvatar = isValidAvatarUrl(snoovatar) ? snoovatar : userIcon;
+                        } catch (e) {
+                            console.log(`Failed to fetch avatar for user ${author}`, e);
+                        }
+
+                        return {
+                            ...post,
+                            authorAvatar,
+                        };
+                    })
+                );
+
+                setPosts(postData); // Store post data including avatars
             } catch (error) {
                 setError("Error fetching posts: " + error.message);
             } finally {
                 setLoading(false);
             }
         };
-
+    
         fetchPosts();
     }, [category]);
-
+    
     if (loading) return <Typography color="textSecondary">Loading...</Typography>;
     if (error) return <Typography color="error">{error}</Typography>; 
 
@@ -56,7 +92,6 @@ const PostList = () => {
                         {/* Card for each post */}
                         <Card sx={{ width: '70%', padding: '16px', backgroundColor: '#333', borderRadius: '8px', color: '#FFFFFF', boxShadow: '0 10px 20px rgba(0, 0, 0, 0.5)' }}>
                             <CardContent>
-                                
                                 <Box display="flex" alignItems="center" justifyContent="center" marginBottom="16px">
                                     {/* Upvote and downvote buttons */}
                                     <Box display="flex" flexDirection="column" alignItems="center" style={{ marginRight: '16px' }}>
@@ -69,71 +104,83 @@ const PostList = () => {
                                         </Button>
                                     </Box>
 
-                                                                <Box display="flex" flexDirection="column" alignItems="center" width="100%">
+                                    <Box display="flex" flexDirection="column" alignItems="center" width="100%">
                                         {/* Title */}
                                         <Typography variant="h6" gutterBottom style={{ fontWeight: '600', color: '#FF5700' }}>
-                                            <Link 
-                                                to={`/r/${post.data.subreddit}/comments/${post.data.id}/${post.data.title.replace(/[^a-z0-9]+/g, '-').toLowerCase()}`} 
-                                                style={{ 
-                                                    textDecoration: 'none', 
+                                            <Link
+                                                to={`/r/${post.data.subreddit}/comments/${post.data.id}/${post.data.title.replace(/[^a-z0-9]+/g, '-').toLowerCase()}`}
+                                                style={{
+                                                    textDecoration: 'none',
                                                     color: '#FF5700',
                                                 }}
-                                                onMouseOver={(e) => (e.currentTarget.style.color = '#FF8000')} 
-                                                onMouseOut={(e) => (e.currentTarget.style.color = '#FF5700')} 
+                                                onMouseOver={(e) => (e.currentTarget.style.color = '#FF8000')}
+                                                onMouseOut={(e) => (e.currentTarget.style.color = '#FF5700')}
                                             >
                                                 {post.data.title}
                                             </Link>
                                         </Typography>
 
-                                        {/* User's name and timestamp above the image, aligned horizontally finally */}
+                                        {/* User's name, avatar and timestamp */}
                                         <Box display="flex" justifyContent="center" alignItems="center" marginBottom="8px">
+                                            {/* Display avatar if available */}
+                                            {post.authorAvatar ? (
+                                                <img
+                                                    src={post.authorAvatar}
+                                                    alt={`${post.data.author}'s avatar`}
+                                                    style={{
+                                                        width: '40px',
+                                                        height: '40px',
+                                                        borderRadius: '50%',
+                                                        marginRight: '16px',
+                                                    }}
+                                                />
+                                            ) : (
+                                                <img
+                                                    src="./public/images/default-avatar.avif"  // Fallback to default avatar
+                                                    alt="default avatar"
+                                                    style={{
+                                                        width: '40px',
+                                                        height: '40px',
+                                                        borderRadius: '50%',
+                                                        marginRight: '16px',
+                                                    }}
+                                                />
+                                            )}
+
                                             <Typography variant="subtitle1" style={{ marginRight: '40px', fontWeight: '600' }}>
                                                 Posted by:
                                                 <Link to={`/user/${post.data.author}`} style={{ textDecoration: 'none', color: '#FFFFFF' }}>
                                                     {post.data.author}
                                                 </Link>
                                             </Typography>
-                                            <Typography variant="body2" color="textSecondary" style={{ color: '#FFFFFF',fontWeight: '600' }}>
-                                            {formatRelativeTime(post.created)}
+                                            <Typography variant="body2" color="textSecondary" style={{ color: '#FFFFFF', fontWeight: '600' }}>
+                                                {formatRelativeTime(post.data.created_utc)} {/* Changed to created_utc */}
                                             </Typography>
                                         </Box>
 
                                         {/* Display image if available */}
-                                        {post.data.url && (post.data.url.endsWith('.jpg') 
-                                        || post.data.url.endsWith('.png') 
-                                        || post.data.url.endsWith('.jpeg') 
-                                        || post.data.url.endsWith('.gif')
-                                        || post.data.url.endsWith('.eps')
-                                        || post.data.url.endsWith('.tiff')
-                                        || post.data.url.endsWith('.raw')
-                                        || post.data.url.endsWith('.pdf')
-                                        || post.data.url.endsWith('.psd')
-                                        || post.data.url.endsWith('.bmp')
-                                        || post.data.url.endsWith('.webp')
-                                        || post.data.url.endsWith('.svg')
-                                        || post.data.url.endsWith('.amp')
-                                        || post.data.url.endsWith('.xcf')
-                                        || post.data.url.endsWith('.jfif')
-                                        || post.data.url.endsWith('.pjpeg')
-                                        || post.data.url.endsWith('.pjp')
-                                        || post.data.url.includes('format=jpg')
-                                        || post.data.url.includes('format=png')
-                                        ) ? (
+                                        {isValidImageUrl(post.data.url) ? (
                                             <img
-                                                src={post.data.url}
+                                                src={cleanUrl(post.data.url)}
                                                 alt={post.data.title}
-                                                loading="lazy" 
-                                                style={{ width: 'auto', height: '500px', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
+                                                loading="lazy"
+                                                style={{ 
+                                                    width: 'auto', 
+                                                    height: '500px', 
+                                                    borderRadius: '8px', 
+                                                    marginBottom: '16px', 
+                                                    filter: 'brightness(1.1) contrast(1.1)' 
+                                                }}
                                             />
                                         ) : post.data.thumbnail && post.data.thumbnail.startsWith('http') ? (
                                             <img
-                                                src={post.data.thumbnail}
+                                                src={cleanUrl(post.data.thumbnail)}
                                                 alt={post.data.title}
-                                                loading="lazy" 
+                                                loading="lazy"
                                                 style={{ width: 'auto', height: '500px', borderRadius: '8px', marginBottom: '16px', filter: 'brightness(1.1) contrast(1.1)' }}
                                             />
                                         ) : (
-                                            <Typography variant="body1" color="#FFFFFFF">No image available for this post.</Typography>
+                                            <Typography variant="body1" color="#FFFFFF">No image available for this post.</Typography>
                                         )}
 
                                         {/* Comments Count */}
@@ -143,7 +190,6 @@ const PostList = () => {
                                                 {post.data.num_comments}
                                             </div>
                                         </Typography>
-
                                     </Box>
                                 </Box>
                             </CardContent>
