@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, TextField, Button, Box } from '@mui/material';
+import RedditIcon from '@mui/icons-material/Reddit';
 
 const Header = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -18,7 +19,7 @@ const Header = () => {
     return (
         <AppBar position="static" style={{ backgroundColor: '#333' }}>
             <Toolbar>
-                {/* Flexbox to distribute space */}
+                
                 <Box 
                     display="flex" 
                     justifyContent="space-between" 
@@ -100,8 +101,9 @@ const Header = () => {
                     {/* Middle Section - Title */}
                     <Typography 
                         variant="h6" 
-                        style={{ color: '#FF5700', fontWeight: 'bold' }} 
+                        style={{ color: '#FF5700', fontWeight: 'bold', display: 'flex', alignItems: 'center' }} 
                     >
+                        <RedditIcon style={{ color: '#FFFFFF', marginRight: '8px' }} />
                         REDDIT MINI
                     </Typography>
 
