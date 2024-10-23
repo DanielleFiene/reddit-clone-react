@@ -30,7 +30,7 @@ const PostDetail = () => {
     useEffect(() => {
         const fetchPostDetails = async () => {
             try {
-                const response = await axios.get(`https://www.reddit.com/r/${subreddit}/comments/${postId}.json`);
+                const response = await axios.get(`https://www.reddit.com/r/${subreddit}/comments/${postId}.json?limit=20`);
                 if (response.data && response.data.length > 0 && response.data[0].data.children.length > 0) {
                     setPost(response.data[0].data.children[0].data);
                     setComments(response.data[1].data.children);
