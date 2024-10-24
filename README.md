@@ -24,11 +24,13 @@ https://reddit-mini-react.vercel.app/
 - Browse top posts from multiple subreddits, including **AskReddit**, **gaming**, and **movies**.
 - A header with quick navigation buttons to **Hot Topics**, **New Posts**, and **Top Posts**.
 - A search functionality to navigate to specific subreddits.
+- A left sidebar with the daily topics
+- A right sidebar with categories and below that displayinh specific communities
 - Displays comments for each post, with avatars sourced from user profiles.
 
 ## Technologies Used
 
-- **Frontend**: React, React Router, Material-UI
+- **Frontend**: React, React Router, Material-UI, Axios
 - **API**: Reddit API for fetching posts, comments, images, avatars and community icons
 - **State Management**: React Hooks for managing component state
 
@@ -66,6 +68,8 @@ Once the application is running, you can:
 
 - Navigate between different subreddit topics using the buttons in the header.
 - Search for specific subreddits using the search bar.
+- Click on the posts in the left sidebar to view its details and comments
+- Click on the categories in the right sidebar to see the posts from a specific catagory or community 
 - Click on any post to view its comments and details.
 
 ## Limitations
@@ -75,7 +79,7 @@ Once the application is running, you can:
 
 ## Future Enhancements
 
-- Implement unit tests for components and features to improve code reliability.
+- Implement unit tests for components and features to improve code reliability, next time I will start with testing and then continue to build....
 - Improve mobile responsiveness and user interface for smaller screens.
 
 ## Contributing
