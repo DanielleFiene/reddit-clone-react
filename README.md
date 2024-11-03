@@ -2,7 +2,7 @@
 
 **Reddit Mini** is a simple web application that allows users to explore various Reddit subreddits. The application fetches data from the Reddit API to display posts, comments, and provide basic navigation between different subreddit topics.
 
-Due to the API call limit if you click too many times its gets blocked for 5 minutes...
+Due to the API call limit if you click too many times it gets blocked for 5 minutes...
 
 https://reddit-mini-react.vercel.app/
 
